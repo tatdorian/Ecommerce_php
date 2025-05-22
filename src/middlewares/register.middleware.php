@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../config/config.middleware.php';
+require '../configs/db.config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare("INSERT INTO user (username, email, password) VALUES (?, ?, ?)");
             if ($stmt->execute([$username, $email, $password_hash])) {
                 $_SESSION['user_id'] = $pdo->lastInsertId();
-                $_SESSION['user_username'] = $username;
+                $_SESSION['user_name'] = $username;
                 header("Location: ../pages/home.page.php");
                 exit();
             } else {

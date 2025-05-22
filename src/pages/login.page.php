@@ -17,7 +17,7 @@ if (!empty($_SESSION['login_error'])) {
 <div class="container">
     <h2>Connexion</h2>
     <?php if (!empty($error)) echo "<div class='error'>$error</div>"; ?>
-    <form method="post" action="middlewares/login.middleware.php">
+    <form method="post" action="../middlewares/login.middleware.php">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit">Se connecter</button>
