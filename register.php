@@ -18,7 +18,7 @@ if (!empty($_SESSION['register_error'])) {
     <h2>Inscription</h2>
     <?php if (!empty($error)) echo "<div class='error'>$error</div>"; ?>
     <form method="post" action="process/register_process.php">
-        <input type="text" name="name" placeholder="Nom" required>
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
         <input type="password" name="password_confirm" placeholder="Confirmer mot de passe" required>

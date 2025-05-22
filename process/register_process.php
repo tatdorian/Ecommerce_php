@@ -3,33 +3,33 @@ session_start();
 require '../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name']);
+    $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
 
     if ($password !== $password_confirm) {
         $_SESSION['register_error'] = "Les mots de passe ne correspondent pas.";
-        header("Location: register.php");
+        header("Location: ../register.php");
         exit();
     } else {
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
+        $stmt = $pdo->prepare("SELECT id FROM user WHERE email = ? OR username = ?");
+        $stmt->execute([$email, $username]);
         if ($stmt->fetch()) {
-            $_SESSION['register_error'] = "Cet email est déjà utilisé.";
-            header("Location: register.php");
+            $_SESSION['register_error'] = "Cet email ou ce nom d'utilisateur est déjà utilisé.";
+            header("Location: ../register.php");
             exit();
         } else {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-            if ($stmt->execute([$name, $email, $password_hash])) {
+            $stmt = $pdo->prepare("INSERT INTO user (username, email, password) VALUES (?, ?, ?)");
+            if ($stmt->execute([$username, $email, $password_hash])) {
                 $_SESSION['user_id'] = $pdo->lastInsertId();
-                $_SESSION['user_name'] = $name;
+                $_SESSION['user_username'] = $username;
                 header("Location: ../home.php");
                 exit();
             } else {
                 $_SESSION['register_error'] = "Erreur lors de l'inscription.";
-                header("Location: register.php");
+                header("Location: ../register.php");
                 exit();
             }
         }
