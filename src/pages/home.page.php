@@ -40,7 +40,6 @@ require_once '../middlewares/home.middleware.php';
                     <?php endif; ?>
                     <div class="article-title"><?php echo htmlspecialchars($article['nom']); ?></div>
                     <div class="article-desc"><?php echo nl2br(htmlspecialchars($article['description'])); ?></div>
-                    <div class="article-meta">Par <b><?php echo htmlspecialchars($article['auteur']); ?></b></div>
                     <div class="article-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
                     <div class="article-date">Publié le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
                 </div>
