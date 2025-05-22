@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../config.php';
+require '../config/config.middleware.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
@@ -10,14 +10,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($password !== $password_confirm) {
         $_SESSION['register_error'] = "Les mots de passe ne correspondent pas.";
-        header("Location: ../register.php");
+        header("Location: ../pages/register.page.php");
         exit();
     } else {
         $stmt = $pdo->prepare("SELECT id FROM user WHERE email = ? OR username = ?");
         $stmt->execute([$email, $username]);
         if ($stmt->fetch()) {
             $_SESSION['register_error'] = "Cet email ou ce nom d'utilisateur est déjà utilisé.";
-            header("Location: ../register.php");
+            header("Location: ../pages/register.page.php");
             exit();
         } else {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -25,11 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute([$username, $email, $password_hash])) {
                 $_SESSION['user_id'] = $pdo->lastInsertId();
                 $_SESSION['user_username'] = $username;
-                header("Location: ../home.php");
+                header("Location: ../pages/home.page.php");
                 exit();
             } else {
                 $_SESSION['register_error'] = "Erreur lors de l'inscription.";
-                header("Location: ../register.php");
+                header("Location: ../pages/register.page.php");
                 exit();
             }
         }

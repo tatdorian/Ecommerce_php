@@ -11,7 +11,7 @@ if (!empty($_SESSION['register_error'])) {
 <head>
     <meta charset="UTF-8">
     <title>Inscription</title>
-    <link rel="stylesheet" href="assets/css/register.css">
+    <link rel="stylesheet" href="../assets/css/register.css">
 </head>
 <body>
 <div class="container">
@@ -25,7 +25,7 @@ if (!empty($_SESSION['register_error'])) {
         <button type="submit">S'inscrire</button>
     </form>
     <div class="login-link">
-        Déjà inscrit ? <a href="login.php">Connectez-vous ici</a>
+        Déjà inscrit ? <a href="login.page.php">Connectez-vous ici</a>
     </div>
 </div>
 </body>
