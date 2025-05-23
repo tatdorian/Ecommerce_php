@@ -32,17 +32,19 @@ require_once '../middlewares/home.middleware.php';
             <p>Aucun livre en vente pour le moment.</p>
         <?php else: ?>
             <?php foreach ($articles as $article): ?>
-                <div class="article-card">
-                    <?php if (!empty($article['image'])): ?>
-                        <img src="<?php echo htmlspecialchars($article['image']); ?>" alt="Parfum" class="article-image">
-                    <?php else: ?>
-                        <div class="article-image"></div>
-                    <?php endif; ?>
-                    <div class="article-title"><?php echo htmlspecialchars($article['nom']); ?></div>
-                    <div class="article-desc"><?php echo nl2br(htmlspecialchars($article['description'])); ?></div>
-                    <div class="article-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
-                    <div class="article-date">Publié le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
-                </div>
+                <a class="article-link" href="detail.page.php?id=<?php echo $article['id']; ?>">
+                    <div class="article-card">
+                        <?php if (!empty($article['image'])): ?>
+                            <img src="<?php echo htmlspecialchars($article['image']); ?>" alt="Couverture du livre" class="article-image">
+                        <?php else: ?>
+                            <div class="article-image book-placeholder">📚</div>
+                        <?php endif; ?>
+                        <div class="article-title"><?php echo htmlspecialchars($article['titre_livre'] ?? $article['nom']); ?></div>
+                        <div class="article-desc"><?php echo nl2br(htmlspecialchars($article['description'])); ?></div>
+                        <div class="article-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
+                        <div class="article-date">Ajouté le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
+                    </div>
+                </a>
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
