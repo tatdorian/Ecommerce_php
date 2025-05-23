@@ -2,14 +2,14 @@
 session_start(); 
 $is_logged_in = isset($_SESSION['user_id']); 
 $user_name = $is_logged_in ? $_SESSION['user_name'] : ''; 
-require_once '../middlewares/home.middleware.php'; 
+require_once '../middlewares/account.middleware.php'; 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bibliothèque | Découvrez notre collection</title>
+    <title>User account</title>
     <link rel="stylesheet" href="../assets/css/home.css">
 </head>
 <body>
@@ -19,7 +19,7 @@ require_once '../middlewares/home.middleware.php';
                 <?php if ($is_logged_in): ?>
                     <div class="nav-greeting">Bonjour, <?php echo htmlspecialchars($user_name); ?></div>
                     <div class="nav-links">
-                        <a href="account.page.php" class="nav-link">Mon compte</a>
+                        <a href="#" class="nav-link">Mon compte</a>
                         <a href="login.page.php" class="nav-link">Déconnexion</a>
                     </div>
                 <?php else: ?>
@@ -30,21 +30,35 @@ require_once '../middlewares/home.middleware.php';
                     </div>
                 <?php endif; ?>
             </nav>
-            
-            <div class="header-content">
-                <h1 class="header-title">Livres Populaires</h1>
-                <p class="header-subtitle">Découvrez notre sélection exclusive des livres les plus en vogue et enrichissez votre bibliothèque personnelle</p>
-            </div>
-            
-            <div class="header-blob blob-left"></div>
-            <div class="header-blob blob-right"></div>
         </div>
     </div>
-    
+
     <div class="main-content">
         <div class="container">
-            <h2 class="section-title">Notre Collection</h2>
-            
+            <h2 class="section-title"><?php echo ucfirst(htmlspecialchars($user_name)); ?></h2>
+            <h3> Mes informations </h3>
+            <!-- user informations -->
+            <?php if ($user): ?>
+                <div class="user-info" >
+                    <div class="profile-picture">
+                        <img src="<?php echo !empty($user['photo_profil']) 
+                            ? htmlspecialchars($user['photo_profil']) 
+                            : 'https://cdn-icons-png.flaticon.com/512/10337/10337609.png'; ?>" 
+                            alt="Photo de profil" class="profile-image" width="100" height="100">
+                    </div>
+
+                    <div class="profile-details">
+                        <p><strong>Nom :</strong> <?php echo htmlspecialchars($user['nom']); ?></p>
+                        <p><strong>Email :</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+                        <p><strong>Solde :</strong> <?php echo number_format($user['solde'], 2, ',', ' '); ?> €</p>
+                        <p><strong>Rôle :</strong> <?php echo htmlspecialchars($user['role']); ?></p>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="container">
+            <h3> Mes articles </h3>
+            <!-- user articles -->
             <?php if (empty($articles)): ?>
                 <div class="empty-state">
                     <div class="empty-state-icon">📚</div>
@@ -81,31 +95,5 @@ require_once '../middlewares/home.middleware.php';
             <?php endif; ?>
         </div>
     </div>
-    
-    <script>
-        // Animation des éléments au chargement
-        document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('.header-content');
-            const books = document.querySelectorAll('.book-card');
-            
-            header.style.opacity = '0';
-            header.style.transform = 'translateY(20px)';
-            
-            setTimeout(() => {
-                header.style.opacity = '1';
-                header.style.transform = 'translateY(0)';
-            }, 100);
-            
-            books.forEach((book, index) => {
-                book.style.opacity = '0';
-                book.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    book.style.opacity = '1';
-                    book.style.transform = 'translateY(0)';
-                }, 200 + (index * 100));
-            });
-        });
-    </script>
 </body>
 </html>
