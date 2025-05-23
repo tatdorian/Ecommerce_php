@@ -25,6 +25,9 @@ require_once '../middlewares/home.middleware.php';
             <a href="login.page.php">Connexion</a>
             <a href="register.page.php">Inscription</a>
         <?php endif; ?>
+        <a href="cart.page.php" class="cart-link" title="Voir le panier">
+            🛒
+        </a>
     </nav>
     <h2 style="text-align:center; margin-bottom:32px;">Tous nos livres</h2>
     <div class="articles">
