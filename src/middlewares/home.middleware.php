@@ -8,4 +8,3 @@ $stmt = $pdo->query(
      ORDER BY a.date_publication DESC"
 );
 $articles = $stmt->fetchAll();
-?>

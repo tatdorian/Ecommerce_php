@@ -1,90 +1,90 @@
 body {
-    background: #f5f6fa;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    margin: 0;
+  background: #f5f6fa;
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
 }
 header {
-    background: #222;
-    color: #fff;
-    padding: 24px 0 16px 0;
-    text-align: center;
+  background: #222;
+  color: #fff;
+  padding: 24px 0 16px 0;
+  text-align: center;
 }
 .container {
-    max-width: 1100px;
-    margin: 30px auto;
-    padding: 0 16px;
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 16px;
 }
 h1 {
-    font-size: 2.5em;
-    margin-bottom: 0.2em;
+  font-size: 2.5em;
+  margin-bottom: 0.2em;
 }
 .articles {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 32px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
 }
 .article-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    width: 300px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: box-shadow 0.2s;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  width: 300px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
 }
 .article-card:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 .article-image {
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    background: #eee;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background: #eee;
 }
 .article-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #273c75;
-    text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #273c75;
+  text-align: center;
 }
 .article-desc {
-    font-size: 0.98em;
-    color: #444;
-    margin-bottom: 10px;
-    text-align: center;
-    min-height: 48px;
+  font-size: 0.98em;
+  color: #444;
+  margin-bottom: 10px;
+  text-align: center;
+  min-height: 48px;
 }
 .article-meta {
-    font-size: 0.9em;
-    color: #888;
-    margin-bottom: 8px;
+  font-size: 0.9em;
+  color: #888;
+  margin-bottom: 8px;
 }
 .article-price {
-    font-size: 1.1em;
-    color: #44bd32;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 1.1em;
+  color: #44bd32;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 .article-date {
-    font-size: 0.85em;
-    color: #aaa;
+  font-size: 0.85em;
+  color: #aaa;
 }
 nav {
-    margin-bottom: 24px;
-    text-align: right;
+  margin-bottom: 24px;
+  text-align: right;
 }
 nav a {
-    color: #273c75;
-    text-decoration: none;
-    margin-left: 18px;
-    font-weight: bold;
+  color: #273c75;
+  text-decoration: none;
+  margin-left: 18px;
+  font-weight: bold;
 }
 nav a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

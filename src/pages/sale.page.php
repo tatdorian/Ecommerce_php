@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_logged_in) {
     $genre_livre = $_POST['genre_livre'];
     $auteur_id = $_SESSION['user_id'];
 
-   
+
     $image_path = null;
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $target_dir = "../uploads/";
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_logged_in) {
         }
     }
 
-    
+
     $stmt = $pdo->prepare("INSERT INTO article (nom, description, prix, date_publication, auteur_id, image, titre_livre, auteur_livre, date_livre, genre_livre) 
                            VALUES (?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$nom, $description, $prix, $auteur_id, $image_path, $titre_livre, $auteur_livre, $date_livre, $genre_livre]);
@@ -43,11 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_logged_in) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Mettre un livre en vente</title>
     <link rel="stylesheet" href="../assets/css/sale.css">
 </head>
+
 <body>
     <nav>
         <?php if ($is_logged_in): ?>
@@ -92,4 +94,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_logged_in) {
         <p>Veuillez vous connecter pour mettre un livre en vente.</p>
     <?php endif; ?>
 </body>
+
 </html>
