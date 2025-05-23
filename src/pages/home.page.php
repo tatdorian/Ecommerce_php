@@ -8,13 +8,13 @@ require_once '../middlewares/home.middleware.php';
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Parfums de Luxe - Accueil</title>
+    <title>Livres - Accueil</title>
     <link rel="stylesheet" href="../assets/css/home.css">
 </head>
 <body>
 <header>
-    <h1>Parfums de Luxe</h1>
-    <p>Découvrez notre sélection exclusive de parfums haut de gamme</p>
+    <h1>Livre populaires</h1>
+    <p>Découvrez notre sélection exclusive des livres les plus en vogue</p>
 </header>
 <div class="container">
     <nav>
@@ -26,10 +26,10 @@ require_once '../middlewares/home.middleware.php';
             <a href="register.page.php">Inscription</a>
         <?php endif; ?>
     </nav>
-    <h2 style="text-align:center; margin-bottom:32px;">Tous nos parfums</h2>
+    <h2 style="text-align:center; margin-bottom:32px;">Tous nos livres</h2>
     <div class="articles">
         <?php if (empty($articles)): ?>
-            <p>Aucun parfum en vente pour le moment.</p>
+            <p>Aucun livre en vente pour le moment.</p>
         <?php else: ?>
             <?php foreach ($articles as $article): ?>
                 <div class="article-card">
@@ -40,7 +40,6 @@ require_once '../middlewares/home.middleware.php';
                     <?php endif; ?>
                     <div class="article-title"><?php echo htmlspecialchars($article['nom']); ?></div>
                     <div class="article-desc"><?php echo nl2br(htmlspecialchars($article['description'])); ?></div>
-                    <div class="article-meta">Par <b><?php echo htmlspecialchars($article['auteur']); ?></b></div>
                     <div class="article-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
                     <div class="article-date">Publié le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
                 </div>
