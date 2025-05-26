@@ -19,6 +19,7 @@ require_once '../middlewares/home.middleware.php';
                 <?php if ($is_logged_in): ?>
                     <div class="nav-greeting">Bonjour, <?php echo htmlspecialchars($user_name); ?></div>
                     <div class="nav-links">
+                        <a href="account.page.php" class="nav-link">Mon compte</a>
                         <a href="sale.page.php" class="nav-link">Vendre</a>
                         <a href="cart.page.php" class="nav-link cart-link" title="Voir le panier">🛒 Panier</a>
                         <a href="login.page.php" class="nav-link">Déconnexion</a>
