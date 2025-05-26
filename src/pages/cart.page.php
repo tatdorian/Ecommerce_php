@@ -1,28 +1,64 @@
 <?php
 session_start();
-$is_logged_in = isset($_SESSION['user_id']);
-$user_name = $is_logged_in ? $_SESSION['user_name'] : '';
-
-// Suppression d'un article du panier
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id'])) {
-    require_once '../configs/db.config.php';
-    $user_id = $_SESSION['user_id'];
-    $article_id = intval($_POST['remove_id']);
-    $stmt = $pdo->prepare("DELETE FROM cart WHERE user_id = ? AND article_id = ?");
-    $stmt->execute([$user_id, $article_id]);
-}
-
-// Modification de la quantité
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_id'], $_POST['quantity'])) {
-    require_once '../configs/db.config.php';
-    $user_id = $_SESSION['user_id'];
-    $article_id = intval($_POST['update_id']);
-    $quantity = max(1, intval($_POST['quantity']));
-    $stmt = $pdo->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND article_id = ?");
-    $stmt->execute([$quantity, $user_id, $article_id]);
-}
-
+require_once '../configs/db.config.php';
 require_once '../middlewares/cart.middleware.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.page.php');
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+$is_logged_in = true; // AJOUT : Variable manquante
+
+// Gérer ajout au panier
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['article_id'])) {
+    $article_id = intval($_POST['article_id']);
+
+    // Vérifier si le produit est déjà dans le panier
+    $stmt = $pdo->prepare("SELECT quantity FROM cart WHERE user_id = ? AND article_id = ?");
+    $stmt->execute([$user_id, $article_id]);
+    $existing = $stmt->fetch();
+
+    if ($existing) {
+        // Incrémenter la quantité
+        $new_quantity = $existing['quantity'] + 1;
+        $stmt = $pdo->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND article_id = ?");
+        $stmt->execute([$new_quantity, $user_id, $article_id]);
+    } else {
+        // Ajouter le produit au panier avec quantité 1
+        $stmt = $pdo->prepare("INSERT INTO cart (user_id, article_id, quantity) VALUES (?, ?, 1)");
+        $stmt->execute([$user_id, $article_id]);
+    }
+
+    header('Location: cart.page.php');
+    exit;
+}
+
+// AJOUT : Gérer la modification de quantité
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_id'])) {
+    $update_id = intval($_POST['update_id']);
+    $new_quantity = intval($_POST['quantity']);
+    
+    if ($new_quantity > 0) {
+        $stmt = $pdo->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND article_id = ?");
+        $stmt->execute([$new_quantity, $user_id, $update_id]);
+    }
+    
+    header('Location: cart.page.php');
+    exit;
+}
+
+// AJOUT : Gérer la suppression du panier
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id'])) {
+    $remove_id = intval($_POST['remove_id']);
+    
+    $stmt = $pdo->prepare("DELETE FROM cart WHERE user_id = ? AND article_id = ?");
+    $stmt->execute([$user_id, $remove_id]);
+    
+    header('Location: cart.page.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -48,6 +84,12 @@ require_once '../middlewares/cart.middleware.php';
 
         <div class="cart-container">
             <div class="cart-content">
+                <nav class="user-nav">
+                    <?php if ($is_logged_in): ?>
+                        <p class="user-greeting">Bonjour, <?php echo isset($_SESSION['user_name']) ? htmlspecialchars($_SESSION['user_name']) : 'Utilisateur'; ?></p>
+                    <?php endif; ?>
+                </nav>
+                
                 <h2 class="section-title">Livres dans votre panier</h2>
                 
                 <div class="cart-list">
@@ -66,6 +108,7 @@ require_once '../middlewares/cart.middleware.php';
                                     <div class="cart-title"><?php echo htmlspecialchars($book['titre_livre'] ?? $book['nom']); ?></div>
                                     <div class="cart-author"><?php echo htmlspecialchars($book['auteur_livre'] ?? 'Auteur inconnu'); ?></div>
                                     <div class="cart-price"><?php echo number_format($book['prix'], 2, ',', ' '); ?> €</div>
+                                    <div class="cart-subtotal">Sous-total: <?php echo number_format($book['prix'] * $book['quantity'], 2, ',', ' '); ?> €</div>
                                     
                                     <form method="post" class="cart-qty-form">
                                         <input type="hidden" name="update_id" value="<?php echo $book['id']; ?>">
