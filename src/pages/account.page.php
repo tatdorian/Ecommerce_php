@@ -10,7 +10,6 @@ require_once '../middlewares/account.middleware.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User account</title>
-    <link rel="stylesheet" href="../assets/css/home.css">
 </head>
 <body>
     <div class="site-header">
@@ -48,48 +47,90 @@ require_once '../middlewares/account.middleware.php';
                     </div>
 
                     <div class="profile-details">
-                        <p><strong>Nom :</strong> <?php echo htmlspecialchars($user['nom']); ?></p>
+                        <p><strong>Nom :</strong> <?php echo htmlspecialchars($user_name); ?></p>
                         <p><strong>Email :</strong> <?php echo htmlspecialchars($user['email']); ?></p>
                         <p><strong>Solde :</strong> <?php echo number_format($user['solde'], 2, ',', ' '); ?> €</p>
                         <p><strong>Rôle :</strong> <?php echo htmlspecialchars($user['role']); ?></p>
                     </div>
                 </div>
+
+                <a href="edit-profile.page.php" class="nav-link">Modifer mes informations</a>
             <?php endif; ?>
         </div>
+
         <div class="container">
-            <h3> Mes articles </h3>
+            <h3> Mes annonces </h3>
             <!-- user articles -->
             <?php if (empty($articles)): ?>
                 <div class="empty-state">
                     <div class="empty-state-icon">📚</div>
-                    <p class="empty-state-text">Aucun livre en vente pour le moment.</p>
+                    <p class="empty-state-text">Vous n'avez posté aucune annonce pour le moment.</p>
                 </div>
             <?php else: ?>
                 <div class="books-grid">
                     <?php foreach ($articles as $article): ?>
-                        <a href="detail.page.php?id=<?php echo $article['id']; ?>" class="book-card">
-                            <?php if (rand(0, 5) === 0): ?>
-                                <div class="book-badge">Nouveau</div>
+                        <?php if (rand(0, 5) === 0): ?>
+                            <div class="book-badge">Nouveau</div>
+                        <?php endif; ?>
+                        
+                        <div class="book-image-container">
+                            <?php if (!empty($article['image'])): ?>
+                                <img src="<?php echo htmlspecialchars($article['image']); ?>" alt="Couverture du livre" class="book-image">
+                            <?php else: ?>
+                                <div class="book-placeholder">📚</div>
                             <?php endif; ?>
+                        </div>
+                        
+                        <div class="book-content">
+                            <h3 class="book-title"><?php echo htmlspecialchars($article['titre_livre'] ?? $article['nom']); ?></h3>
+                            <p class="book-description"><?php echo nl2br(htmlspecialchars($article['description'])); ?></p>
                             
-                            <div class="book-image-container">
-                                <?php if (!empty($article['image'])): ?>
-                                    <img src="<?php echo htmlspecialchars($article['image']); ?>" alt="Couverture du livre" class="book-image">
-                                <?php else: ?>
-                                    <div class="book-placeholder">📚</div>
-                                <?php endif; ?>
+                            <div class="book-meta">
+                                <div class="book-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
+                                <div class="book-date">Ajouté le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
                             </div>
+                        </div>
+
+                        <a href="edit-article.page.php" class="nav-link">Modifer l'annonce</a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="container">
+            <h3> Mes anciennes annonces </h3>
+            <!-- user old articles -->
+            <?php if (empty($old_articles)): ?>
+                <div class="empty-state">
+                    <div class="empty-state-icon">📚</div>
+                    <p class="empty-state-text">Aucune de vos annonces n'a aboutie ou n'a été supprimée pour le moment.</p>
+                </div>
+            <?php else: ?>
+                <div class="books-grid">
+                    <?php foreach ($old_articles as $article): ?>
+                        <?php if (rand(0, 5) === 0): ?>
+                            <div class="book-badge">Nouveau</div>
+                        <?php endif; ?>
+                        
+                        <div class="book-image-container">
+                            <?php if (!empty($article['image'])): ?>
+                                <img src="<?php echo htmlspecialchars($article['image']); ?>" alt="Couverture du livre" class="book-image">
+                            <?php else: ?>
+                                <div class="book-placeholder">📚</div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <div class="book-content">
+                            <h3 class="book-title"><?php echo htmlspecialchars($article['titre_livre'] ?? $article['nom']); ?></h3>
+                            <p class="book-description"><?php echo nl2br(htmlspecialchars($article['description'])); ?></p>
                             
-                            <div class="book-content">
-                                <h3 class="book-title"><?php echo htmlspecialchars($article['titre_livre'] ?? $article['nom']); ?></h3>
-                                <p class="book-description"><?php echo nl2br(htmlspecialchars($article['description'])); ?></p>
-                                
-                                <div class="book-meta">
-                                    <div class="book-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
-                                    <div class="book-date">Ajouté le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
-                                </div>
+                            <div class="book-meta">
+                                <div class="book-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
+                                <div class="book-date">Ajouté le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
                             </div>
-                        </a>
+                        </div>
+
+                        <a href="edit-article.page.php" class="nav-link">Modifer l'annonce</a>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>

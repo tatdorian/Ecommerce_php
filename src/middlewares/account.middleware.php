@@ -1,6 +1,5 @@
 <?php
 require_once '../configs/db.config.php';
-session_start();
 
 $user_id = $_SESSION['user_id'] ?? null;
 
@@ -23,6 +22,17 @@ if ($user_id) {
     );
     $stmt->execute(['id' => $user_id]);
     $articles = $stmt->fetchAll();
+
+    // Anciennes publications de l'utilisateur (vendus ou supprimées)
+    $stmt = $pdo->prepare(
+        "SELECT oa.id, oa.nom, oa.description, oa.prix, oa.date_publication, oa.image
+         FROM old_article oa
+         WHERE oa.auteur_id = :id
+         ORDER BY oa.date_publication DESC"
+    );
+    $stmt->execute(['id' => $user_id]);
+    $old_articles = $stmt->fetchAll();
+    
 } else {
     $user = null;
     $articles = [];
