@@ -6,11 +6,13 @@ require_once '../middlewares/home.middleware.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Librairie en Ligne - Accueil</title>
     <link rel="stylesheet" href="../assets/css/home.css">
 </head>
+
 <body>
 <header>
     <h1>Librairie en Ligne</h1>
@@ -28,6 +30,7 @@ require_once '../middlewares/home.middleware.php';
         <a href="cart.page.php" class="cart-link" title="Voir le panier">
             🛒
         </a>
+        <a href="sale.page.php">Vendre</a>
     </nav>
     <h2 style="text-align:center; margin-bottom:32px;">Tous nos livres</h2>
     <div class="articles">
@@ -53,4 +56,5 @@ require_once '../middlewares/home.middleware.php';
     </div>
 </div>
 </body>
+
 </html>
