@@ -31,9 +31,10 @@ if ($user_id) {
          ORDER BY oa.date_publication DESC"
     );
     $stmt->execute(['id' => $user_id]);
-    $articles = $stmt->fetchAll();
+    $old_articles = $stmt->fetchAll();
 } else {
     $user = null;
     $articles = [];
+    $old_articles = [];
 }
 ?>
