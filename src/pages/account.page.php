@@ -129,8 +129,6 @@ require_once '../middlewares/account.middleware.php';
                                 <div class="book-date">Ajouté le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
                             </div>
                         </div>
-
-                        <a href="edit-article.page.php" class="nav-link">Modifer l'annonce</a>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
