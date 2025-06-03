@@ -81,13 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $is_logged_in) {
                 <form action="sale.page.php" method="POST" enctype="multipart/form-data" class="sale-form">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="nom">Nom du livre</label>
+                            <label for="nom">Titre du livre</label>
                             <input type="text" name="nom" id="nom" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="titre_livre">Titre du livre</label>
-                            <input type="text" name="titre_livre" id="titre_livre" required>
                         </div>
 
                         <div class="form-group">

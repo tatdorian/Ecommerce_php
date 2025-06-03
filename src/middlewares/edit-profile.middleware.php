@@ -16,7 +16,6 @@ $user = [
     'photo_profil' => ''
 ];
 
-// Récupérer les infos actuelles
 $stmt = $pdo->prepare("SELECT username, email, photo_profil FROM user WHERE id = ?");
 $stmt->execute([$user_id]);
 $user_data = $stmt->fetch();
@@ -31,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $new_password = $_POST['new_password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Gestion de l'upload de la photo de profil (stockage en base64)
+   
     $photo_profil_base64 = $user['photo_profil'];
     if (
         isset($_FILES['photo_profil']) &&
@@ -44,12 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         
         if (in_array($ext, $allowed)) {
-            // Vérifier la taille du fichier (max 5MB)
+           
             $file_size = filesize($tmp_name);
             if ($file_size > 5 * 1024 * 1024) {
                 $error = "Le fichier est trop volumineux (max 5MB).";
             } else {
-                // Lire le fichier et le convertir en base64
+                
                 $image_data = file_get_contents($tmp_name);
                 $mime_type = mime_content_type($tmp_name);
                 $photo_profil_base64 = 'data:' . $mime_type . ';base64,' . base64_encode($image_data);
@@ -59,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Mise à jour du mot de passe si demandé
+   
     if (!$error && !empty($new_password)) {
         $stmt = $pdo->prepare("SELECT password FROM user WHERE id = ?");
         $stmt->execute([$user_id]);
@@ -75,13 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Mise à jour des autres infos (username, email, photo)
     if (!$error) {
         $stmt = $pdo->prepare("UPDATE user SET username = ?, email = ?, photo_profil = ? WHERE id = ?");
         $stmt->execute([$username, $email, $photo_profil_base64, $user_id]);
         $success = true;
         $_SESSION['user_name'] = $username;
-        // Recharge les infos
+    
         $stmt = $pdo->prepare("SELECT username, email, photo_profil FROM user WHERE id = ?");
         $stmt->execute([$user_id]);
         $user = $stmt->fetch();
