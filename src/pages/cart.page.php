@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../middlewares/auth.middleware.php';
 require_once '../configs/db.config.php';
 require_once '../middlewares/cart.middleware.php';
 

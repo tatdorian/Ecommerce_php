@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../middlewares/auth.middleware.php';
 require_once '../configs/db.config.php';
 
 $user_id = $_SESSION['user_id'] ?? null;

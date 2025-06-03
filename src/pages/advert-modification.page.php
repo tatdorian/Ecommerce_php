@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../middlewares/auth.middleware.php';
 require_once '../configs/db.config.php';
 
 $is_logged_in = isset($_SESSION['user_id']);

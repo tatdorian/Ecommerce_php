@@ -9,6 +9,9 @@ $stmt = $pdo->query(
 );
 $articles = $stmt->fetchAll();
 
-$stmt = $pdo->prepare("SELECT u.role FROM user u WHERE u.id = :id");
-$stmt->execute(['id' => $_SESSION['user_id']]);
-$user = $stmt->fetch();
+$user = null;
+if (isset($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT u.role FROM user u WHERE u.id = :id");
+    $stmt->execute(['id' => $_SESSION['user_id']]);
+    $user = $stmt->fetch();
+}

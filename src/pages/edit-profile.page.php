@@ -1,4 +1,8 @@
-<?php require_once '../middlewares/edit-profile.middleware.php'; ?>
+<?php 
+require_once '../middlewares/auth.middleware.php';
+require_once '../middlewares/edit-profile.middleware.php'; 
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
