@@ -293,3 +293,35 @@
     margin-right: 0;
   }
 }
+
+.book-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-link {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.edit-article-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(107, 61, 242, 0.1);
+  color: var(--secondary);
+  border: 1px solid var(--secondary);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: var(--transition);
+  text-decoration: none;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.edit-article-btn:hover {
+  background: var(--secondary);
+  color: white;
+}

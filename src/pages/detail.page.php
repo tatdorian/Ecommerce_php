@@ -80,7 +80,7 @@ require_once '../middlewares/detail.middleware.php';
                             <input type="hidden" name="article_id" value="<?php echo $article['id']; ?>">
                             <button type="submit" class="action-button secondary">Ajouter au panier</button>
                         </form>
-                        <form method="post" action="acheter.php">
+                        <form method="post" action="buy.page.php">
                             <input type="hidden" name="article_id" value="<?php echo $article['id']; ?>">
                             <button type="submit" class="action-button primary">Acheter maintenant</button>
                         </form>

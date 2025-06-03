@@ -55,29 +55,37 @@ require_once '../middlewares/home.middleware.php';
             <?php else: ?>
                 <div class="books-grid">
                     <?php foreach ($articles as $article): ?>
-                        <a href="detail.page.php?id=<?php echo $article['id']; ?>" class="book-card">
-                            <?php if (rand(0, 5) === 0): ?>
-                                <div class="book-badge">Nouveau</div>
-                            <?php endif; ?>
-                            
-                            <div class="book-image-container">
-                                <?php if (!empty($article['image'])): ?>
-                                    <img src="<?php echo htmlspecialchars($article['image']); ?>" alt="Couverture du livre" class="book-image">
-                                <?php else: ?>
-                                    <div class="book-placeholder">📚</div>
+                        <div class="book-card">
+                            <a href="detail.page.php?id=<?php echo $article['id']; ?>" class="book-card">
+                                <?php if (rand(0, 5) === 0): ?>
+                                    <div class="book-badge">Nouveau</div>
                                 <?php endif; ?>
-                            </div>
-                            
-                            <div class="book-content">
-                                <h3 class="book-title"><?php echo htmlspecialchars($article['titre_livre'] ?? $article['nom']); ?></h3>
-                                <p class="book-description"><?php echo nl2br(htmlspecialchars($article['description'])); ?></p>
                                 
-                                <div class="book-meta">
-                                    <div class="book-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
-                                    <div class="book-date">Ajouté le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
+                                <div class="book-image-container">
+                                    <?php if (!empty($article['image'])): ?>
+                                        <img src="<?php echo htmlspecialchars($article['image']); ?>" alt="Couverture du livre" class="book-image">
+                                    <?php else: ?>
+                                        <div class="book-placeholder">📚</div>
+                                    <?php endif; ?>
                                 </div>
-                            </div>
-                        </a>
+                                
+                                <div class="book-content">
+                                    <h3 class="book-title"><?php echo htmlspecialchars($article['titre_livre'] ?? $article['nom']); ?></h3>
+                                    <p class="book-description"><?php echo nl2br(htmlspecialchars($article['description'])); ?></p>
+                                    
+                                    <div class="book-meta">
+                                        <div class="book-price"><?php echo number_format($article['prix'], 2, ',', ' '); ?> €</div>
+                                        <div class="book-date">Ajouté le <?php echo date('d/m/Y', strtotime($article['date_publication'])); ?></div>
+                                    </div>
+                                </div>
+                            </a>
+                            <?php if (
+                                (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $article['auteur_id']) ||
+                                (isset($user) && $user['role'] == 'admin')
+                            ) : ?>
+                                <a href="advert-modification.page.php?id=<?php echo $article['id']; ?>" class="edit-article-btn">Modifier l'annonce</a>
+                            <?php endif; ?>
+                        </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
