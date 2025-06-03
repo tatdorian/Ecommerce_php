@@ -41,47 +41,6 @@ Une application web de e-commerce spécialisée dans la vente de livres d'occasi
 - Serveur : Apache (XAMPP)
 - Architecture : MVC (Model-View-Controller)
 
-📁 Structure du projet
-
-ecommerce_php/
-├── readme.md
-└── src/
-    ├── assets/
-    │   ├── css/
-    │   │   ├── global.css          # Styles globaux et variables CSS
-    │   │   ├── login.css           # Styles page de connexion
-    │   │   ├── register.css        # Styles page d'inscription
-    │   │   ├── home.css            # Styles page d'accueil
-    │   │   ├── sale.css            # Styles page de vente
-    │   │   ├── cart.css            # Styles page panier
-    │   │   ├── detail.css          # Styles page détail livre
-    │   │   ├── account.css         # Styles page compte utilisateur
-    │   │   └── edit-profile.css    # Styles modification profil
-    │   └── img/
-    ├── configs/
-    │   └── db.config.php           # Configuration base de données
-    ├── middlewares/
-    │   ├── account.middleware.php      # Logique page compte
-    │   ├── cart.middleware.php         # Gestion du panier
-    │   ├── detail.middleware.php       # Détails d'un livre
-    │   ├── edit-profile.middleware.php # Modification profil
-    │   ├── home.middleware.php         # Page d'accueil
-    │   ├── login.middleware.php        # Authentification
-    │   ├── register.middleware.php     # Inscription
-    │   └── sale.middleware.php         # Vente de livres
-    ├── pages/
-    │   ├── account.page.php            # Page compte utilisateur
-    │   ├── advert-modification.page.php # Modification d'annonce
-    │   ├── cart.page.php               # Page panier
-    │   ├── delete-article.php          # Suppression d'article
-    │   ├── detail.page.php             # Détail d'un livre
-    │   ├── edit-profile.page.php       # Modification profil
-    │   ├── home.page.php               # Page d'accueil
-    │   ├── login.page.php              # Page de connexion
-    │   ├── register.page.php           # Page d'inscription
-    │   └── sale.page.php               # Page de vente
-    └── uploads/                        # Dossier pour les images uploadées
-
     🚀 Installation et configuration
 
 - XAMPP (Apache + MySQL + PHP)
@@ -124,3 +83,6 @@ ecommerce_php/
 7. Accéder à l'application
 
     http://localhost/ecommerce_php/src/pages/login.page.php
+
+
+@Authors    Tatoulian Dorian    Flandrin Hugo   Diop Amadou
