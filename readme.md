@@ -95,7 +95,7 @@ ecommerce_php/
 
 2. Cloner le projet 
 
-    git clone 
+    git clone https://github.com/tatdorian/Ecommerce_php.git
 
 3. Placer le projet dans XAMPP
 
