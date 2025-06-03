@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once '../middlewares/auth.middleware.php';
 require_once '../configs/db.config.php';
 require_once '../middlewares/cart.middleware.php';
 
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id'])) {
                         <?php endforeach; ?>
                         
                         <div class="cart-total">
-                            Total : <?php echo number_format($total, 2, ',', ' '); ?> €
+                            <a href="buy.page.php" class="back-link">Total : <?php echo number_format($total, 2, ',', ' '); ?> €</a>
                         </div>
                     <?php endif; ?>
                 </div>

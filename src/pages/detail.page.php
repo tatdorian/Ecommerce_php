@@ -1,8 +1,11 @@
 <?php
-session_start();
+
+require_once '../middlewares/auth.middleware.php';
+require_once '../middlewares/detail.middleware.php';
+
 $is_logged_in = isset($_SESSION['user_id']);
 $user_name = $is_logged_in ? $_SESSION['user_name'] : '';
-require_once '../middlewares/detail.middleware.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -80,7 +83,7 @@ require_once '../middlewares/detail.middleware.php';
                             <input type="hidden" name="article_id" value="<?php echo $article['id']; ?>">
                             <button type="submit" class="action-button secondary">Ajouter au panier</button>
                         </form>
-                        <form method="post" action="acheter.php">
+                        <form method="post" action="buy.page.php">
                             <input type="hidden" name="article_id" value="<?php echo $article['id']; ?>">
                             <button type="submit" class="action-button primary">Acheter maintenant</button>
                         </form>

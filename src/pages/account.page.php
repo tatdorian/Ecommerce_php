@@ -1,8 +1,10 @@
 <?php
-session_start();
+require_once '../middlewares/auth.middleware.php';
+require_once '../middlewares/account.middleware.php';
+
 $is_logged_in = isset($_SESSION['user_id']);
 $user_name = $is_logged_in ? $_SESSION['user_name'] : '';
-require_once '../middlewares/account.middleware.php';
+
 
 $message = '';
 $error = '';
