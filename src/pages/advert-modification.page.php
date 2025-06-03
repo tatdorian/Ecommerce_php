@@ -35,7 +35,7 @@ if ($_POST) {
     $nom = trim($_POST['nom'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $prix = floatval($_POST['prix'] ?? 0);
-    $image = trim($_POST['image'] ?? '');
+    $image = $article['image'];
 
 
     if (empty($nom)) {
