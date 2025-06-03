@@ -47,14 +47,37 @@ require_once '../middlewares/home.middleware.php';
         <div class="container">
             <h2 class="section-title">Notre Collection</h2>
             
-            <?php if (empty($articles)): ?>
+            <div class="search-container">
+                <form method="GET" action="home.page.php">
+                    <input type="text" name="search" placeholder="Recherchez un livre..." value="<?php echo htmlspecialchars($_GET['search'] ?? ''); ?>">
+                    <button type="submit">Rechercher</button>
+                </form>
+            </div>
+            
+            <?php
+            $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+            $filteredArticles = [];
+            
+            if (!empty($searchTerm)) {
+                foreach ($articles as $article) {
+                    $title = $article['titre_livre'] ?? $article['nom'];
+                    if (stripos($title, $searchTerm) !== false) {
+                        $filteredArticles[] = $article;
+                    }
+                }
+            } else {
+                $filteredArticles = $articles;
+            }
+            ?>
+            
+            <?php if (empty($filteredArticles)): ?>
                 <div class="empty-state">
                     <div class="empty-state-icon">📚</div>
-                    <p class="empty-state-text">Aucun livre en vente pour le moment.</p>
+                    <p class="empty-state-text">Aucun livre trouvé.</p>
                 </div>
             <?php else: ?>
                 <div class="books-grid">
-                    <?php foreach ($articles as $article): ?>
+                    <?php foreach ($filteredArticles as $article): ?>
                         <div class="book-card">
                             <a href="detail.page.php?id=<?php echo $article['id']; ?>" class="book-card">
                                 <?php if (rand(0, 5) === 0): ?>
