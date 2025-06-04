@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../configs/db.config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
