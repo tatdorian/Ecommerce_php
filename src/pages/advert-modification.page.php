@@ -11,6 +11,12 @@ if (!$user_id) {
     exit;
 }
 
+// Récupération du rôle de l'utilisateur
+$stmt = $pdo->prepare("SELECT role FROM user WHERE id = :id");
+$stmt->execute(['id' => $user_id]);
+$user = $stmt->fetch();
+$user_role = $user['role'] ?? 'client';
+
 $article_id = $_GET['id'] ?? null;
 $message = '';
 $error = '';
@@ -20,9 +26,14 @@ if (!$article_id) {
     exit;
 }
 
-
-$stmt = $pdo->prepare("SELECT * FROM article WHERE id = :id AND auteur_id = :user_id");
-$stmt->execute(['id' => $article_id, 'user_id' => $user_id]);
+// Récupérer l'article selon le rôle
+if ($user_role === 'admin') {
+    $stmt = $pdo->prepare("SELECT * FROM article WHERE id = :id");
+    $stmt->execute(['id' => $article_id]);
+} else {
+    $stmt = $pdo->prepare("SELECT * FROM article WHERE id = :id AND auteur_id = :user_id");
+    $stmt->execute(['id' => $article_id, 'user_id' => $user_id]);
+}
 $article = $stmt->fetch();
 
 if (!$article) {
@@ -30,13 +41,11 @@ if (!$article) {
     exit;
 }
 
-
 if ($_POST) {
     $nom = trim($_POST['nom'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $prix = floatval($_POST['prix'] ?? 0);
     $image = $article['image'];
-
 
     if (empty($nom)) {
         $error = "Le nom du livre est obligatoire.";
@@ -46,7 +55,6 @@ if ($_POST) {
         $error = "Le prix doit être supérieur à 0.";
     } else {
         try {
-
             if (!empty($_FILES['newImageFile']['name'])) {
                 $allowedExtensions = ['jpeg', 'jpg', 'gif', 'png', 'webp'];
                 $fileName = $_FILES['newImageFile']['name'];
@@ -60,25 +68,47 @@ if ($_POST) {
                 }
             }
 
-            $stmt = $pdo->prepare("
-                UPDATE article 
-                SET nom = :nom, description = :description, prix = :prix, image = :image
-                WHERE id = :id AND auteur_id = :user_id
-            ");
+            // Mise à jour selon le rôle
+            if ($user_role === 'admin') {
+                $stmt = $pdo->prepare("
+                    UPDATE article 
+                    SET nom = :nom, description = :description, prix = :prix, image = :image
+                    WHERE id = :id
+                ");
+                $params = [
+                    'nom' => $nom,
+                    'description' => $description,
+                    'prix' => $prix,
+                    'image' => $image,
+                    'id' => $article_id
+                ];
+            } else {
+                $stmt = $pdo->prepare("
+                    UPDATE article 
+                    SET nom = :nom, description = :description, prix = :prix, image = :image
+                    WHERE id = :id AND auteur_id = :user_id
+                ");
+                $params = [
+                    'nom' => $nom,
+                    'description' => $description,
+                    'prix' => $prix,
+                    'image' => $image,
+                    'id' => $article_id,
+                    'user_id' => $user_id
+                ];
+            }
 
-            $result = $stmt->execute([
-                'nom' => $nom,
-                'description' => $description,
-                'prix' => $prix,
-                'image' => $image,
-                'id' => $article_id,
-                'user_id' => $user_id
-            ]);
+            $result = $stmt->execute($params);
 
             if ($result) {
                 $message = "L'annonce a été modifiée avec succès !";
-                $stmt = $pdo->prepare("SELECT * FROM article WHERE id = :id AND auteur_id = :user_id");
-                $stmt->execute(['id' => $article_id, 'user_id' => $user_id]);
+                if ($user_role === 'admin') {
+                    $stmt = $pdo->prepare("SELECT * FROM article WHERE id = :id");
+                    $stmt->execute(['id' => $article_id]);
+                } else {
+                    $stmt = $pdo->prepare("SELECT * FROM article WHERE id = :id AND auteur_id = :user_id");
+                    $stmt->execute(['id' => $article_id, 'user_id' => $user_id]);
+                }
                 $article = $stmt->fetch();
             } else {
                 $error = "Erreur lors de la modification de l'annonce.";
@@ -89,6 +119,7 @@ if ($_POST) {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">

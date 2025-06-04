@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['article_id'])) {
             <?php elseif ($payment_success): ?>
                 <div class="success-message">
                     <h2>✅ Paiement réussi !</h2>
-                    <p>Merci pour votre commande. Vous allez recevoir un email de confirmation.</p>
+                    <p>Merci pour votre commande.</p>
                     <a href="account.page.php">Voir mes commandes</a>
                 </div>
             <?php else: ?>
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['article_id'])) {
                         <h3>💳 Informations de paiement</h3>
                         
                         <div class="form-group">
-                            <input type="text" id="card_number" name="card_number" maxlength="16" placeholder=" " required>
+                            <input type="text" id="card_number" name="card_number" maxlength="19" placeholder=" " required>
                             <label for="card_number">Numéro de carte (16 chiffres)</label>
                         </div>
 
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['article_id'])) {
                     // Supprimer tous les caractères non numériques
                     let value = e.target.value.replace(/\D/g, '');
                     // Limiter à 16 chiffres
-                    value = value.substring(0, 16);
+                    value = value.substring(0, 19);
                     // Ajouter des espaces tous les 4 chiffres
                     value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
                     e.target.value = value;

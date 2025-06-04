@@ -26,8 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_buy'])) {
     $card_expiry = $_POST['card_expiry'] ?? '';
     $card_cvv = $_POST['card_cvv'] ?? '';
 
+    $card_number = str_replace(' ', '', $card_number);
     if (!preg_match('/^\d{16}$/', $card_number)) {
-        $errors[] = "NumÃ©ro de carte invalide (16 chiffres attendus).";
+        $errors[] = "Numéro de carte invalide (16 chiffres attendus).";
     }
     if (!preg_match('/^(0[1-9]|1[0-2])\/\d{2}$/', $card_expiry)) {
         $errors[] = "Date d'expiration invalide (format MM/AA).";
