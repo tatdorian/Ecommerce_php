@@ -1,0 +1,364 @@
+@import url("../css/global.css");
+
+.payment-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 0;
+}
+
+.payment-container {
+    width: 100%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.6s ease forwards;
+}
+
+.payment-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.payment-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.payment-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.cart-summary {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+}
+
+.cart-summary h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.item-quantity {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.item-price {
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-section {
+    margin-bottom: 1.5rem;
+}
+
+.form-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    position: absolute;
+    left: 1rem;
+    top: 0.75rem;
+    color: var(--text-light);
+    pointer-events: none;
+    transition: var(--transition);
+    font-size: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1.25rem 1rem 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(var(--secondary-rgb), 0.1);
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    transform: translateY(-0.6rem) scale(0.8);
+    transform-origin: left top;
+    color: var(--secondary);
+}
+
+.form-group input::placeholder {
+    color: transparent;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.payment-button {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+    background: linear-gradient(135deg, var(--secondary), var(--primary));
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.payment-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+.payment-button:hover::before {
+    left: 100%;
+}
+
+.payment-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.back-link a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.back-link a:hover {
+    color: var(--secondary);
+}
+
+.success-message {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(var(--success-rgb), 0.1);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--success);
+}
+
+.success-message h2 {
+    color: var(--success);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.success-message p {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.success-message a {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--success);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.success-message a:hover {
+    background: var(--success-dark);
+    transform: translateY(-2px);
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-light);
+}
+
+.error-list {
+    background: rgba(var(--danger-rgb), 0.1);
+    border: 1px solid var(--danger);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.error-list ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: var(--danger);
+}
+
+.floating-shape {
+    position: absolute;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    background: var(--secondary);
+    border-radius: 24px;
+    top: 15%;
+    left: 15%;
+    transform: rotate(15deg);
+    animation: float 8s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 60px;
+    height: 60px;
+    background: var(--primary);
+    border-radius: 50%;
+    bottom: 20%;
+    right: 18%;
+    animation: float 6s ease-in-out infinite 1s;
+}
+
+.shape-3 {
+    width: 40px;
+    height: 40px;
+    background: var(--success);
+    border-radius: 12px;
+    top: 25%;
+    right: 25%;
+    transform: rotate(45deg);
+    animation: float 7s ease-in-out infinite 0.5s;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .payment-container {
+        padding: 2rem;
+        max-width: 90%;
+    }
+    
+    .payment-title {
+        font-size: 2rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .item-price {
+        align-self: flex-end;
+    }
+}

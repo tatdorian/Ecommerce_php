@@ -324,3 +324,8 @@
     justify-content: center;
   }
 }
+
+.cart-total .back-link {
+    color: white;
+    text-decoration: none; /* Optionnel, pour éviter le soulignement */
+}

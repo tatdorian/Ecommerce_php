@@ -43,16 +43,24 @@ require_once '../middlewares/home.middleware.php';
         </div>
     </div>
     
+    <form method="GET" action="home.page.php" class="search">
+        <div class="container">
+            <div class="search-wrapper">
+                <input type="text" name="search" placeholder="Recherchez un livre..." value="<?php echo htmlspecialchars($_GET['search'] ?? ''); ?>" />
+                <button type="submit" class="search-button" title="Rechercher">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </form>
+
+
     <div class="main-content">
         <div class="container">
             <h2 class="section-title">Notre Collection</h2>
-            
-            <div class="search-container">
-                <form method="GET" action="home.page.php">
-                    <input type="text" name="search" placeholder="Recherchez un livre..." value="<?php echo htmlspecialchars($_GET['search'] ?? ''); ?>">
-                    <button type="submit">Rechercher</button>
-                </form>
-            </div>
             
             <?php
             $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -119,7 +127,9 @@ require_once '../middlewares/home.middleware.php';
         document.addEventListener('DOMContentLoaded', function() {
             const header = document.querySelector('.header-content');
             const books = document.querySelectorAll('.book-card');
+            const nav = document.querySelector('.site-nav');
             
+            // Animation d'entrée
             header.style.opacity = '0';
             header.style.transform = 'translateY(20px)';
             
@@ -136,6 +146,43 @@ require_once '../middlewares/home.middleware.php';
                     book.style.opacity = '1';
                     book.style.transform = 'translateY(0)';
                 }, 200 + (index * 100));
+            });
+            
+            // Effet de scroll pour la navigation
+            let lastScrollTop = 0;
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+                
+                // Effet de parallaxe léger pour l'image de livre
+                const bookBg = document.querySelector('.site-header::before');
+                if (bookBg) {
+                    const scrolled = window.pageYOffset;
+                    const parallax = scrolled * 0.2;
+                    document.querySelector('.site-header').style.transform = `translateY(${parallax}px)`;
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+            
+            // Smooth scroll pour les liens internes
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
             });
         });
     </script>
